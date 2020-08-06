@@ -1,0 +1,22 @@
+.table-panel {
+  margin-top: 15px;
+  padding: 10px;
+  border: 1px solid darkgray;
+  border-radius: 8px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 600px;
+  margin-bottom: 20px;
+}
+
+.select-fields {
+  width: 250px;
+}
+.pagination {
+  display: flex;
+  justify-content: flex-start;
+}

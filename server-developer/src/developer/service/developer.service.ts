@@ -23,8 +23,6 @@ export class DeveloperService {
     const { page, pageSize, ...search } = query;
     const offSet = +pageSize * +page;
 
-    console.log({search})
-
     const totalElements = await this.developerModel
       .countDocuments({ ...search })
       .exec();
