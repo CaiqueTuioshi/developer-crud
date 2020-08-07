@@ -159,12 +159,12 @@ const DeveloperList: React.FC<{}> = () => {
                       <TableCell align="left">{item.hobby}</TableCell>
                       <TableCell align="left">{item.birthdate}</TableCell>
                       <TableCell align="right">
-                        <IconButton onClick={() => onEdit(item._id!)}>
+                        <IconButton data-testid="editbutton-table" onClick={() => onEdit(item._id!)}>
                           <EditOutlined />
                         </IconButton>
                       </TableCell>
                       <TableCell align="right">
-                        <IconButton onClick={() => onRemove(item._id!)}>
+                        <IconButton data-testid="removebutton-table" onClick={() => onRemove(item._id!)}>
                           <Delete />
                         </IconButton>
                       </TableCell>
@@ -193,6 +193,7 @@ const DeveloperList: React.FC<{}> = () => {
           />
 
           <Fab
+            data-testid="floating-action-button"
             style={style}
             color="primary"
             className="floating-action-button"

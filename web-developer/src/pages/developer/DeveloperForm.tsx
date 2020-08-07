@@ -43,7 +43,6 @@ const DeveloperForm: React.FC<{}> = () => {
   }, [id]);
 
   const submit = (values: DeveloperDTO) => {
-    console.log(values)
     setLoading(true);
     DeveloperService.saveOrUpdate(values)
       .then(() => {
@@ -59,11 +58,11 @@ const DeveloperForm: React.FC<{}> = () => {
   const formatDate = (date: string) => {
     const dateToBeParsed = new Date(date);
     const year = dateToBeParsed.getFullYear();
-    const month = `${dateToBeParsed.getMonth() + 1}`.padStart(2, '0');
+    const month = `${dateToBeParsed.getMonth() + 1}`.padStart(2, "0");
     const day = dateToBeParsed.getDate();
 
     return `${year}-${month}-${day}`;
-  }
+  };
 
   return (
     <div className="panel">
@@ -86,6 +85,7 @@ const DeveloperForm: React.FC<{}> = () => {
                 }}
               >
                 <TextField
+                  data-testid="name-input"
                   style={{ width: "600px" }}
                   label="Nome"
                   name="name"
