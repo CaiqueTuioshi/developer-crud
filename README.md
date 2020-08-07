@@ -41,6 +41,11 @@ Acessar a pasta do back-end:
 cd server-developer
 ```
 
+Rodar os testes:
+```
+yarn test
+```
+
 Iniciar a aplicação:
 ```bash
 yarn start:dev
