@@ -44,7 +44,6 @@ export class DeveloperService {
       return {
         content: developers,
         totalElements: totalElements,
-        totalPages: totalElements / +pageSize,
       };
     }
   }

@@ -10,7 +10,6 @@ export class DeveloperDTO {
 export class PagedDeveloperDTO {
   content: DeveloperDTO[];
   totalElements: number;
-  totalPages: number;
 }
 
 export class DeleteResultDTO {
