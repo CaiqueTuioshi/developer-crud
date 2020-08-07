@@ -1,9 +1,10 @@
 export interface DeveloperDTO {
+  _id?: string;
   name: string;
   gender: string;
   age: number;
   hobby: string;
-  birthdate: Date;
+  birthdate: string;
 }
 
 export interface PagedDeveloper {

@@ -18,23 +18,25 @@ import {
   Button,
   IconButton,
   Fab,
+  InputLabel,
 } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 import EditOutlined from "@material-ui/icons/EditOutlined";
 import AddIcon from "@material-ui/icons/Add";
+import Delete from "@material-ui/icons/Delete";
 
 import "./developerlist.css";
 
-
 const style: any = {
   margin: 0,
-  top: 'auto',
+  top: "auto",
   right: 20,
   bottom: 20,
-  left: 'auto',
-  position: 'fixed',
+  left: "auto",
+  position: "fixed",
 };
 
-const DeveloperList = () => {
+const DeveloperList: React.FC<{}> = () => {
   const [loading, setLoading] = useState<boolean>();
   const [developers, setDevelopers] = useState<DeveloperDTO[]>();
   const [totalElements, setTotalElements] = useState<number>(0);
@@ -43,17 +45,22 @@ const DeveloperList = () => {
   const [field, setField] = useState<string>("");
   const [search, setSearch] = useState<string>("");
 
-  const doPagedSearch = useCallback((searchQuery?: string) => {
-    setLoading(true);
-    const pagination = { page, pageSize };
-    DeveloperService.findAllPaged(searchQuery ?? "", pagination)
-      .then((response) => {
-        setDevelopers(response.data.content);
-        setTotalElements(response.data.totalElements);
-      })
-      .catch((error) => alert(`Erro ao buscar os desenvolvedores, ${error}`))
-      .finally(() => setLoading(false));
-  }, [page, pageSize]);
+  const history = useHistory();
+
+  const doPagedSearch = useCallback(
+    (searchQuery?: string) => {
+      setLoading(true);
+      const pagination = { page, pageSize };
+      DeveloperService.findAllPaged(searchQuery ?? "", pagination)
+        .then((response) => {
+          setDevelopers(response.data.content);
+          setTotalElements(response.data.totalElements);
+        })
+        .catch((error) => alert(`Erro ao buscar os desenvolvedores, ${error}`))
+        .finally(() => setLoading(false));
+    },
+    [page, pageSize]
+  );
 
   useEffect(() => {
     doPagedSearch();
@@ -64,6 +71,16 @@ const DeveloperList = () => {
       const searchQuery = field.concat("=").concat(search);
       doPagedSearch(searchQuery);
     }
+  };
+
+  const onRemove = (id: string) => {
+    setLoading(true);
+    DeveloperService.remove(id)
+      .then(() => {
+        alert(`Desenvolvedor com id: ${id}, removido com sucesso.`);
+      })
+      .catch((error) => alert(`Erro ao remover desenvolvedor, ${error}`))
+      .finally(() => setLoading(false));
   };
 
   const onChangeSelect = (event: React.ChangeEvent<any>) => {
@@ -81,6 +98,10 @@ const DeveloperList = () => {
     setPage(0);
   };
 
+  const onEdit = (id: string) => history.push(`/developer/${id}`);
+
+  const onAdd = () => history.push("/developer/new");
+
   return (
     <div className="table-panel">
       {loading ? (
@@ -90,16 +111,14 @@ const DeveloperList = () => {
       ) : (
         <div className="container">
           <FormControl>
-            <div className="form-container">
+            <div className="form-container-filter">
+              <InputLabel htmlFor="field">Fitro</InputLabel>
               <Select
-                displayEmpty
+                name="field"
                 className="select-fields"
                 value={field}
                 onChange={(event) => onChangeSelect(event)}
               >
-                <MenuItem value="">
-                  <em>Selecione o campo do filtro</em>
-                </MenuItem>
                 <MenuItem value="name">Nome</MenuItem>
                 <MenuItem value="age">Idade</MenuItem>
                 <MenuItem value="gender">Sexo</MenuItem>
@@ -109,6 +128,7 @@ const DeveloperList = () => {
               <TextField
                 name="search"
                 label="Pesquisa"
+                value={search}
                 onChange={(event) => setSearch(event.target.value)}
               />
               <Button variant="outlined" color="primary" onClick={doSearch}>
@@ -126,20 +146,26 @@ const DeveloperList = () => {
                   <TableCell align="left">Hobby</TableCell>
                   <TableCell align="left">Data de nascimento</TableCell>
                   <TableCell align="right"></TableCell>
+                  <TableCell align="right"></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {developers ? (
                   developers.map((item) => (
-                    <TableRow key={`${item.name}-${item.birthdate}`}>
+                    <TableRow key={item._id}>
                       <TableCell align="left">{item.name}</TableCell>
                       <TableCell align="left">{item.gender}</TableCell>
                       <TableCell align="left">{item.age}</TableCell>
                       <TableCell align="left">{item.hobby}</TableCell>
                       <TableCell align="left">{item.birthdate}</TableCell>
                       <TableCell align="right">
-                        <IconButton>
+                        <IconButton onClick={() => onEdit(item._id!)}>
                           <EditOutlined />
+                        </IconButton>
+                      </TableCell>
+                      <TableCell align="right">
+                        <IconButton onClick={() => onRemove(item._id!)}>
+                          <Delete />
                         </IconButton>
                       </TableCell>
                     </TableRow>
@@ -166,7 +192,12 @@ const DeveloperList = () => {
             onChangeRowsPerPage={handleChangeRowsPerPage}
           />
 
-          <Fab style={style} color="primary" className="floating-action-button">
+          <Fab
+            style={style}
+            color="primary"
+            className="floating-action-button"
+            onClick={() => onAdd()}
+          >
             <AddIcon />
           </Fab>
         </div>

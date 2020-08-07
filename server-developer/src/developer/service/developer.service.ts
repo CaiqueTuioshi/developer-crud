@@ -72,9 +72,10 @@ export class DeveloperService {
     }
   }
 
-  async update(_id: string, developer: DeveloperDTO): Promise<DeveloperDTO> {
+  async update(developer: DeveloperDTO): Promise<DeveloperDTO> {
     try {
-      return this.developerModel.updateOne({ _id }, developer);
+      const { _id } = developer;
+      return this.developerModel.updateOne({ _id }, developer).exec();
     } catch (error) {
       throw new HttpException(
         'Nenhum desenvolvedor encontrado.',

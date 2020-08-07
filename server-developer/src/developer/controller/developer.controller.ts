@@ -46,12 +46,11 @@ export class DeveloperController {
     return this.developerService.create(developer);
   }
 
-  @Put(':id')
+  @Put()
   async updateDeveloper(
-    @Param('id') id: string,
     @Body() developer,
   ): Promise<DeveloperDTO> {
-    return this.developerService.update(id, developer);
+    return this.developerService.update(developer);
   }
 
   @HttpCode(204)

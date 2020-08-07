@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Header from "./pages/header/Header";
 import Home from "./pages/home/Home";
 import DeveloperList from "./pages/developer/DeveloperList";
+import DeveloperForm from "./pages/developer/DeveloperForm";
 import axios from 'axios';
 
 import './app.css'
@@ -20,6 +21,9 @@ const App = () => {
           </Route>
           <Route exact path="/developer">
             <DeveloperList />
+          </Route>
+          <Route path="/developer/:id" >
+            <DeveloperForm />
           </Route>
         </Switch>
       </BrowserRouter>
