@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  server:
+    container_name: server-developer
+    build: './server-developer'
+    expose:
+      - ${API_SERVER_PORT}
+    environment:
+      API_HOST: ${API_HOST}
+      APP_SERVER_PORT: ${APP_SERVER_PORT}
+    ports:
+      - 3003:3003
+    volumes:
+      - ./server-developer/src:/usr/app/server/src
+    command: yarn start:dev
+
+  web:
+    container_name: web-developer
+    build: './web-developer'
+    environment:
+      - REACT_APP_PORT=${REACT_APP_PORT}
+    expose:
+      - 3000
+    ports:
+        - "3000:3000"
+    volumes:
+      - ./web-developer/src:/usr/app/web/src
+    links:
+      - server
+    command: yarn start
+    stdin_open: true
+
