@@ -18,6 +18,23 @@ Os endpoints do back-end pode ser utilizado fazendo as requisições pela url: h
 ## Instalação sem Docker:
 Depois de clonado o repositório, navegue até a raiz do diretório `developer-crud`.
 
+#### Front-end
+
+Acessar a pasta do front-end:
+```bash
+cd web-developer
+```
+
+Rodar os testes:
+```
+yarn test
+```
+
+Iniciar a aplicação:
+```bash
+yarn start
+```
+
 #### Back-end
 Acessar a pasta do back-end:
 ```bash
@@ -27,18 +44,6 @@ cd server-developer
 Iniciar a aplicação:
 ```bash
 yarn start:dev
-```
-
-#### Front-end
-
-Acessar a pasta do front-end:
-```bash
-cd web-developer
-```
-
-Iniciar a aplicação:
-```bash
-yarn start
 ```
 
 O front-end pode acessar abrindo o browser, usando a url: http://localhost:3000
